@@ -1,5 +1,5 @@
 <template>
-    <section class="h-full">
+    <section class="md:flex md:justify-center mb-6 mt-6 mx-6 ">
         <div class="px-6 h-half text-gray-800">
             <div
             class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6"
@@ -53,7 +53,7 @@
                     <label class="form-check-label inline-block text-gray-800" for="exampleCheck2"
                         >Запомнить </label>
                     </div>
-                    <a href="#!" class="text-gray-800">Забыли пароль?</a>
+                    <a href="/forgot_password" class="text-gray-800">Забыли пароль?</a>
                 </div>
                 <div class="text-center lg:text-left">
                     <button
@@ -101,6 +101,7 @@ export default {
           .then (res => {
             localStorage.access_token = res.data.access_token;
             localStorage.token_type = res.data.token_type;
+            this.$router.go('/home')
           })
           .catch (err =>{
             console.log(err)

@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Sanctum\PersonalAccessToken;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 class AuthController extends Controller
 {
 
@@ -17,7 +21,15 @@ class AuthController extends Controller
         $user->email = $request->input('user.email');
         $user->name = $request->input('user.lastname')." ".$request->input('user.firstname')." ".$request->input('user.fathername');
         $user->password = Hash::make($request->input('user.password'));
+        $user->group_id = $request->input('user.group_id');
         $user->save();
+        Auth::login($user);
+        $tokenResult = $user->createToken('authToken')->plainTextToken;
+        return response()->json([
+          'status_code' => 200,
+          'access_token' => $tokenResult,
+          'token_type' => 'Bearer',
+        ]);
     }
 
     public function login(Request $request)
@@ -52,8 +64,9 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        Auth::guard('web')->logout();
+       // $request->user()->currentAccessToken()->delete();
+       $request->user()->tokens()->delete();
+       Auth::guard('web')->logout();
         return response()->json([
           'status_code' => 200,
           'message' => 'Logged out',
@@ -62,7 +75,61 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-        dd("KEK");
-        return "EKE";
+      $res = $request->user();
+        return $res ? $res : null;
+      }
+
+      public function forgot_password(Request $request)
+      {
+        $request->validate([
+          'email' => 'required|email',
+      ]);
+
+      $status = Password::sendResetLink(
+          $request->only('email')
+      );
+
+      if ($status == Password::RESET_LINK_SENT) {
+          return [
+              'status' => 'Ссылка на сброс пароля направлена на почту!'
+          ];
+      }
+
+      return response([
+        'message'=> [trans($status)],
+      ], 500);
     }
+
+    public function reset_password(Request $request)
+    {
+      $request->validate([
+        'token' => 'required',
+        'email' => 'required|email',
+        'password' => ['required'],
+      ]);
+
+      $status = Password::reset(
+          $request->only('email', 'password', 'token'),
+          function ($user) use ($request) {
+              $user->forceFill([
+                  'password' => Hash::make($request->password),
+                  'remember_token' => Str::random(60),
+              ])->save();
+
+              $user->tokens()->delete();
+
+              event(new PasswordReset($user));
+          }
+      );
+
+      if ($status == Password::PASSWORD_RESET) {
+          return response([
+              'message'=> 'Password reset successfully'
+          ]);
+      }
+
+      return response([
+          'message'=> __($status)
+      ], 500);
+      }
 }

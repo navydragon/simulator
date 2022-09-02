@@ -14,13 +14,18 @@ class AdminTaskResource extends JsonResource
      */
     public function toArray($request)
     {
-        $lesson = $this->whenLoaded('lesson');
         return [
             'id' => $this->id,
+            'type' => $this->type,
+            'typeId' => $this->task_type_id,
+            'lessonId' => $this->lesson_id,
+            'lesson' => new AdminLessonResource($this->whenLoaded('lesson')),
             'description'=> $this->description,
             'position' => $this->position,
-            'lesson' => $this->course,
-            'start_code' => $this->start_code,
+            'startCode' => $this->start_code,
+            'active' => (boolean) $this->active,
+            'rightCode' => $this->right_code,
+            'rightOutput' => json_decode($this->right_output)
         ];
     }
 }

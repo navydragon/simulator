@@ -1,19 +1,4 @@
-<!--
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ]
-  }
-  ```
--->
+
 <template>
   <div class="h-screen flex overflow-hidden bg-gray-100">
     <TransitionRoot as="template" :show="sidebarOpen">
@@ -32,7 +17,7 @@
               </div>
             </TransitionChild>
             <div class="flex-shrink-0 flex items-center px-4">
-              <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow" />
+              <img class="h-8 w-auto" src="https://static.tildacdn.com/tild3432-6232-4135-b338-633939383635/logo-ief-rut15.png" alt="Workflow" />
             </div>
             <div class="mt-5 flex-1 h-0 overflow-y-auto">
               <nav class="px-2 space-y-1">
@@ -63,8 +48,8 @@
       <div class="flex flex-col w-64">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div class="flex flex-col h-0 flex-1">
-          <div class="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900">
-            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow" />
+          <div class="flex items-center h-16 flex-shrink-0 px-4 bg-gray-100">
+            <img class="h-8 w-auto" src="https://static.tildacdn.com/tild3432-6232-4135-b338-633939383635/logo-ief-rut15.png" alt="Workflow" />
           </div>
           <div class="flex-1 flex flex-col overflow-y-auto">
             <nav class="flex-1 px-2 py-4 bg-gray-800 space-y-1">
@@ -93,7 +78,8 @@
         </button>
         <div class="flex-1 px-4 flex justify-between">
           <div class="flex-1 flex">
-            <form class="w-full flex md:ml-0" action="#" method="GET">
+
+            <!-- <form class="w-full flex md:ml-0" action="#" method="GET">
               <label for="search-field" class="sr-only">Search</label>
               <div class="relative w-full text-gray-400 focus-within:text-gray-600">
                 <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
@@ -101,20 +87,20 @@
                 </div>
                 <input id="search-field" class="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm" placeholder="Search" type="search" name="search" />
               </div>
-            </form>
+            </form> -->
           </div>
           <div class="ml-4 flex items-center md:ml-6">
-            <button class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <!-- <button class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               <span class="sr-only">View notifications</span>
               <BellIcon class="h-6 w-6" aria-hidden="true" />
-            </button>
+            </button> -->
 
             <!-- Profile dropdown -->
             <Menu as="div" class="ml-3 relative">
               <div>
                 <MenuButton class="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   <span class="sr-only">Open user menu</span>
-                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                  <img class="h-8 w-8 rounded-full" src="https://armed03.ru/assets/images/unnamed.jpg" alt="" />
                 </MenuButton>
               </div>
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
@@ -162,22 +148,23 @@ import {
 import { SearchIcon } from '@heroicons/vue/solid'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Documents', href: '#', icon: InboxIcon, current: false },
-  { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+  { name: 'Курсы', href: '/catalog', icon: HomeIcon, current: true },
+  // { name: 'Моё обучение', href: '/courses', icon: UsersIcon, current: false },
+  // { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
+  // { name: 'Documents', href: '#', icon: InboxIcon, current: false },
+  // { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+  // { name: 'Projects', href: '#', icon: FolderIcon, current: false },
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Профиль', href: '/profile' },
+  //{ name: 'Settings', href: '#' },
+  { name: 'Выход', href: '/logout' },
 ]
 
 const adminNavigation = [
-	{ name: 'Курсы', href: '/admin/courses' },
+  { name: 'Курсы', href: '/admin/courses', icon: FolderIcon, current: false },
 ]
+
 
 export default {
   components: {
@@ -205,5 +192,12 @@ export default {
       sidebarOpen,
     }
   },
+  created() 
+  {
+      if (this.user === "")
+      {
+          this.$router.push('/')
+      }
+  }
 }
 </script>

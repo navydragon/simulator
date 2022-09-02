@@ -18,6 +18,12 @@ class LessonController extends Controller
         return new AdminLessonResource($lesson);
     }
 
+    public function update(Lesson $lesson, Request $request)
+    {
+        $lesson->text = $request->input('lesson.text');
+        $lesson->save();
+    }
+
     public function show(Lesson $lesson)
     {
         return new AdminLessonResource($lesson->loadMissing('tasks'));

@@ -21,6 +21,7 @@ class AdminLessonResource extends JsonResource
             'active' => $this->active,
             'position' => $this->position,
             'module' => $this->module,
+            'text' => $this->text,
             'tasks' => AdminTaskResource::collection($this->whenLoaded('tasks')),
         ];
     }

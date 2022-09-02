@@ -31,10 +31,17 @@
         "@headlessui/vue": "^1.6.4",
         "@heroicons/vue": "^1.0.6",
         "@tailwindcss/forms": "^0.5.2",
+        "babel-plugin-prismjs": "^2.1.0",
+        "codemirror": "^6.0.1",
         "laravel-mix": "^6.0.43",
+        "monaco-editor": "^0.34.0",
+        "monaco-editor-vue3": "^0.1.6",
+        "monaco-editor-webpack-plugin": "^7.0.1",
+        "prismjs": "^1.28.0",
         "sweetalert2": "^11.4.17",
         "tw-elements": "^1.0.0-alpha12",
         "vue": "^3.2.36",
+        "vue-codemirror": "^6.0.0",
         "vue-router": "^4.0.13"
     }
 }

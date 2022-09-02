@@ -18,4 +18,5 @@ class Lesson extends Model
     {
         return $this->hasMany(Task::class,'lesson_id')->orderBy('position');
     }
+
 }

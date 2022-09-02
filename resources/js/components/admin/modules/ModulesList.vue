@@ -2,7 +2,7 @@
 <template>
   <div class="bg-white shadow  sm:rounded-md">
     <ul class="divide-y divide-gray-200">
-      <li v-for="(module,index) in modules" :key="module.id">
+      <li v-for="(module) in modules" :key="module.id">
         <a href="#" class="block hover:bg-gray-50">
           <div class="px-4 py-4 sm:px-6">
             <div class="flex items-center justify-between">

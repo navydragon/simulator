@@ -23,7 +23,7 @@ dom.watch();
 
 import GuestLayout from './components/layouts/guest/Guest.vue'
 import UserLayout from './components/layouts/user/User.vue'
-
+import LearningLayout from './components/layouts/learning/Learning.vue'
 
 
 
@@ -31,19 +31,22 @@ import UserLayout from './components/layouts/user/User.vue'
 const app = createApp (App)
 app.component('guest-layout',GuestLayout);
 app.component('user-layout',UserLayout);
+app.component('learning-layout',LearningLayout);
 
 app.use(router);
 
 import CKEditor from '@ckeditor/ckeditor5-vue';
+
 app.use(CKEditor)
+
 axios.get('/api/user')
 .then(response => {
-    console.log(response.data);
     let user = response.data
+    console.log(user);
     app.provide('user',user)
 })
 .catch (error =>{
-    let user = null
+    let user = ""
     app.provide('user',user)
 })
 .finally(response => {

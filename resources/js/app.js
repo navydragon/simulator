@@ -5,7 +5,8 @@ import router from './routes';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://127.0.0.1:8000';
+//axios.defaults.baseURL = 'http://127.0.0.1:8000';
+axios.defaults.baseURL = 'https://simulator.emiit.ru';
 
 axios.defaults.headers.common = {'Authorization': `${localStorage.getItem('token_type') || null} ${localStorage.getItem('access_token') || null}`}
 

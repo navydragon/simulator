@@ -130,7 +130,7 @@
           </div>
         </div>
          <div v-show="tab=='theory'" >
-            <div clas="lessontext" v-html="lessonText">
+            <div class="lessontext" v-html="lessonText">
             </div> 
            <button type="button" v-if="lesson.tasks.length > 0" @click="switchTab('tasks')" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-5">Перейти к задачам</button>
            <button type="button" v-else-if="lesson.next_lesson_id != null" @click="completeLesson(current_user_lesson_id)" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-5">Перейти к следующей теме</button>

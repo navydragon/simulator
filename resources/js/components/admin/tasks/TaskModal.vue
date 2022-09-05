@@ -156,7 +156,7 @@ export default {
       })    
     },
     tryRightCode(){
-      axios.post('/api/code/'+this.type_name,{code: this.task.rightCode })
+      axios.post('/api/code/'+this.type_name,{code: this.task.rightCode,task_type_id: this.task.typeId})
       .then(response => {
         this.task.rightOutput = response.data
       })

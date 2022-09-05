@@ -431,7 +431,6 @@ export default {
 <style>
 code {
   background: #f7f9fc;
-  box-shadow: inset 0 0 0 1px #dfe5ee;
   display: inline;
     box-sizing: border-box;
     min-width: 1.86em;
@@ -456,11 +455,11 @@ img {
   display: inline;
 }
 table {
- margin: 0px auto;
+ margin: 1em auto;
  table-layout: auto;
  border-collapse: collapse;
  min-width: 50%;
- max-width: 50%;
+ max-width: 75%;
 }
 tr,th,td {
   border: 1px solid;
@@ -468,7 +467,19 @@ tr,th,td {
   text-align: left;
 }
 p{
-  margin-bottom: 8px;
+  margin-bottom: 1em;
+  text-align: justify;
+  line-height: 1.85714285714286;
+}
+
+h2{
+  font-weight: 800;
+  margin-block: 1em;
+}
+
+ul {
+  margin: 10px;
+  list-style-type: square;
 }
 
 
@@ -480,5 +491,15 @@ p{
 .fade-enter,
 .fade-leave-to {
 	opacity: 0;
+}
+
+blockquote {
+  background-color: #e0e7ff;
+  border-left: 5px solid #312e81;
+  padding: 1.2em;
+  margin: 1.5em 1em 1.5em 3em;
+  font-size: 1.1em;
+  line-height: inherit;
+  position: relative;
 }
 </style>

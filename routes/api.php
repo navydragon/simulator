@@ -11,6 +11,7 @@ use App\Http\Controllers\LearningController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\CodeController;
 use App\Http\Controllers\UserController;
+use App\Models\TaskType;
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -54,8 +55,10 @@ Route::get('/test', function (Request $request) {
 });
 
 Route::post('/code/sql', function (Request $request){
+    $task_type = TaskType::find($request->input('task_type_id'));
+    $connection = $task_type->connection;
     try {
-        $query = DB::select($request->code);
+        $query = DB::connection($connection)->select(DB::raw($request->code));
     } catch (Throwable $e) {
         return response([
             'status' => 'error',

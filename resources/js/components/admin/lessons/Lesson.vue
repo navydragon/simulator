@@ -10,7 +10,10 @@
             <i class="fas fa-save mr-1"></i> Сохранить
           </button>
         </div>
-        <div v-show="currentTab === 'Предпросмотр'" v-html="lesson.text">
+        <div v-show="currentTab === 'Предпросмотр'" class="bg-white p-5">
+          <div v-html="lesson.text">
+
+          </div> 
         </div>
         <div v-show="currentTab === 'Задачи'" >
             <h4 class="my-2">Задачи в теме </h4>

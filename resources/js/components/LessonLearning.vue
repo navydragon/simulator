@@ -26,8 +26,8 @@
                 :class="[open ? 'max-w-xl' : 'max-w-0']"
                 style="height:99%"
             >
-                <div class="w-fit max-w-2xl  xs:w-1/2 p-4 font-bold text-xl h-full">
-                  <div class="mx-4 flex flex-row">
+                <div class="w-full max-w-2xl  xs:w-1/2 p-4 font-bold text-xl h-full pl-5">
+                  <div class="flex flex-row">
                     
                     <a href="#" @click.prevent="courseActive=true" :class="[courseActive ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'inline-flex items-center px-1 pt-1 border-b-2 font-medium pb-2']" >
                       Курс 

@@ -23,7 +23,7 @@
               <h3 class="text-gray-900 text-md font-medium truncate">{{ course.name }}</h3>
               <!-- <span class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full"> ...</span> -->
             </div>
-            <p class="mt-1 text-gray-500 text-sm truncate"> description</p>
+            <p class="mt-1 text-gray-500 text-sm truncate"> &nbsp;</p>
           </div>
           <AcademicCapIcon class="flex-shrink-0 mr-1.5 h-10 w-10 text-black-400" aria-hidden="true" />
         </div>

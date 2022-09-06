@@ -31,7 +31,8 @@ class CodeController extends Controller
        }
 
         try {
-            $query = DB::connection($connection)->select(DB::raw($request->code));
+            $code = strtolower($request->code);
+            $query = DB::connection($connection)->select(DB::raw($code));
         } catch (Exception $e) {
             return response([
                 'status' => 'error',
@@ -77,7 +78,8 @@ class CodeController extends Controller
         $connection = $ut->task->type->connection;
 
         try {
-            $query = DB::connection($connection)->select(DB::raw($request->code));
+            $code = strtolower($request->code);
+            $query = DB::connection($connection)->select(DB::raw($code));
         } catch (Exception $e) {
             return response([
                 'status' => 'error',
@@ -100,7 +102,7 @@ class CodeController extends Controller
 
         $ut->current_output = str_replace("'", "\'", json_encode($obj,JSON_UNESCAPED_UNICODE));
         $ut->save();
-        $ro = DB::connection($connection)->select(DB::raw($t->right_code));
+        $ro = DB::connection($connection)->select(DB::raw(strtolower($t->right_code)));
 
         if ($query == $ro) {
             $ut->is_completed = true;

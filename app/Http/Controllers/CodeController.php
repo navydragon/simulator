@@ -31,7 +31,7 @@ class CodeController extends Controller
        }
 
         try {
-            $code = strtolower($request->code);
+            $code = mb_strtolower($request->code);
             $query = DB::connection($connection)->select(DB::raw($code));
         } catch (Exception $e) {
             return response([
@@ -78,7 +78,7 @@ class CodeController extends Controller
         $connection = $ut->task->type->connection;
 
         try {
-            $code = strtolower($request->code);
+            $code = mb_strtolower($request->code);
             $query = DB::connection($connection)->select(DB::raw($code));
         } catch (Exception $e) {
             return response([
@@ -102,7 +102,7 @@ class CodeController extends Controller
 
         $ut->current_output = str_replace("'", "\'", json_encode($obj,JSON_UNESCAPED_UNICODE));
         $ut->save();
-        $ro = DB::connection($connection)->select(DB::raw(strtolower($t->right_code)));
+        $ro = DB::connection($connection)->select(DB::raw(mb_strtolower($t->right_code)));
 
         if ($query == $ro) {
             $ut->is_completed = true;
@@ -137,7 +137,7 @@ class CodeController extends Controller
 
     public function check_hack($code)
     {
-        $code = strtolower($code);
+        $code = mb_strtolower($code);
         $rows = explode("\r\n",$code);
         foreach ($rows as $row) {
            $words = explode(" ",$row);

@@ -24,8 +24,9 @@
                 ref="content"
                 class="transition-all duration-700 bg-white overflow-hidden flex  justify-center w-full border border-3 border-black"
                 :class="[open ? 'max-w-xl' : 'max-w-0']"
+                style="height:99%"
             >
-                <div class="w-fit max-w-2xl  xs:w-1/2 p-4 font-bold text-xl">
+                <div class="w-fit max-w-2xl  xs:w-1/2 p-4 font-bold text-xl h-full">
                   <div class="mx-4 flex flex-row">
                     
                     <a href="#" @click.prevent="courseActive=true" :class="[courseActive ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'inline-flex items-center px-1 pt-1 border-b-2 font-medium pb-2']" >
@@ -66,13 +67,33 @@
                         </li>
                       </ul>
                     </div>
-                    <div v-else>
+                    <div v-else class="h-full">
                        <h2 class="text-xl ml-2 font-bold leading-7 text-gray-900 sm:text-xl sm:tracking-tight sm:truncate">{{current_module.name}}</h2>
                        <p class="text-gray-500 text-base ml-2 mt-2 font-lignt">Уроки</p>
-                      <ul  role="list" class="divide-y divide-gray-200 mt-3">
-                        <li v-for="lesson,lesson_index in current_module.lessons" :key="'l'+lesson.id">
-                          <a href="#" @click.prevent="ul ? goLesson(lesson.id):''" class="block hover:bg-gray-50">
-                            <div :set="ul=current_user_module.user_lessons.find(el => el.lesson_id==lesson.id)" @click="alert('kek')" class="px-4 py-4 flex items-center sm:px-6">
+                      <ul  role="list" class="divide-y divide-gray-200 mt-3 overflow-y-scroll" style="height:550px">
+                        <li v-for="lesson,lesson_index in current_module.lessons" :key="'l'+lesson.id" >
+                          <span :set="ul=current_user_module.user_lessons.find(el => el.lesson_id==lesson.id)"></span>
+                          <a href="#" v-if="ul" @click.prevent="goLesson(lesson.id)" class="block hover:bg-gray-50">
+                            <div class="px-4 py-4 flex items-center sm:px-6">
+                              <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+                                <div class="truncate">
+                                  <div class="flex">
+                                    <p 
+                                    :class="[ul ? 'text-black' : 'text-gray-500', 'font-medium truncate']"
+                                    
+                                     >{{lesson_index+1}}. {{ lesson.name }}</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="ml-5 flex-shrink-0 flex flex-row">
+                                <CheckIcon v-if="ul&&ul.is_completed" class="h-5 w-5 mr-3 text-green-400" aria-hidden="true" />
+                                <ChevronRightIcon v-if="ul" class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                <LockClosedIcon v-else  class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                              </div>
+                            </div>
+                          </a>
+                          <a href="#" v-else @click.prevent="" class="block hover:bg-gray-50">
+                            <div class="px-4 py-4 flex items-center sm:px-6">
                               <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                                 <div class="truncate">
                                   <div class="flex">
@@ -380,6 +401,7 @@ export default {
     },
     goLesson(lesson_id)
     {
+
       this.$router.push('/learnings/'+this.learning_id+'/lessons/'+lesson_id)
         .then(() => {
           console.log('Updated route', this.$route)

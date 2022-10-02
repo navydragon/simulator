@@ -131,4 +131,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
 
     Route::post('/learnings', [LearningController::class, 'add_learning']);
+
+    Route::get('/modules/{module}/force_next_module', [LearningController::class, 'force_next_module'])
 });

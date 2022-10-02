@@ -187,7 +187,7 @@ export default {
       {
         this.task = {
           description: "description",
-          startCode: "# напишите Ваш код здесь",
+          startCode: "-- напишите Ваш код здесь",
           rightCode: "SELECT * FROM users",
           rightOutput: null,
           active: true,

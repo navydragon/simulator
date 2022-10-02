@@ -107,7 +107,7 @@ Route::post('/password/reset',[AuthController::class, 'reset_password']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    
+    Route::post('admin_modules/{module}/force_next_module', [LearningController::class, 'force_next_module']);
     Route::apiResource('/admin/courses', CourseController::class);
     Route::apiResource('/admin/modules', ModuleController::class);
     Route::apiResource('/admin/lessons', LessonController::class);
@@ -132,5 +132,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/learnings', [LearningController::class, 'add_learning']);
 
-    Route::get('/modules/{module}/force_next_module', [LearningController::class, 'force_next_module'])
+
 });

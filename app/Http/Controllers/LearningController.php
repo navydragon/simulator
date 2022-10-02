@@ -120,9 +120,11 @@ class LearningController extends Controller
 
     public function force_next_module(Module $module)
     {
+        dd("KEK");
         $ums = UserModule::where('module_id',$module->id)->where('is_completed',1);
         if (!is_null($module->next_module_id))
         {
+            
             $next_module = Module::find($module->next_module_id);
             foreach ($ums as $um)
             {

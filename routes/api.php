@@ -59,7 +59,7 @@ Route::post('/code/sql', function (Request $request){
     $connection = $task_type->connection;
     if (!is_null($request->preCode))
     {
-        $precode = DB::connection($connection)->select(DB::raw($request->preCode));
+        $precode = DB::connection($connection)->select("SET NOCOUNT ON;".DB::raw($request->preCode));
     }
     try {
         $query = DB::connection($connection)->select(DB::raw($request->code));
@@ -71,7 +71,7 @@ Route::post('/code/sql', function (Request $request){
     }
     if (!is_null($request->postCode))
     {
-        $postcode = DB::connection($connection)->select(DB::raw($request->postCode));
+        $postcode = DB::connection($connection)->select("SET NOCOUNT ON;".DB::raw($request->postCode));
     }
     $obj =  new stdClass();
     if (count($query)> 0)

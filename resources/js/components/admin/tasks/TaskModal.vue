@@ -32,6 +32,18 @@
                   <ckeditor :editor="editor" v-model="task.description" :config="editorConfig"></ckeditor>
                 </div>
                 <div class="mt-2">
+                  <label class="block text-sm font-medium text-gray-700">Пре-код</label>
+                   <div class="h-48">
+                     <MonacoEditor class="h-full border w-full"  theme="vs" :options="options" v-model:value="task.preCode"  :language="type_name" />
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <label class="block text-sm font-medium text-gray-700">Пост-код</label>
+                   <div class="h-48">
+                     <MonacoEditor class="h-full border w-full"  theme="vs" :options="options" v-model:value="task.postCode"  :language="type_name" />
+                  </div>
+                </div>
+                <div class="mt-2">
                   <label class="block text-sm font-medium text-gray-700">Стартовый код</label>
                    <div class="h-48">
                      <MonacoEditor class="h-full border w-full"  theme="vs" :options="options" v-model:value="task.startCode"  :language="type_name" />
@@ -156,7 +168,11 @@ export default {
       })    
     },
     tryRightCode(){
-      axios.post('/api/code/'+this.type_name,{code: this.task.rightCode,task_type_id: this.task.typeId})
+      axios.post('/api/code/'+this.type_name,{
+        code: this.task.rightCode,
+        preCode: this.task.preCode,
+        postCode: this.task.postCode,
+        task_type_id: this.task.typeId})
       .then(response => {
         this.task.rightOutput = response.data
       })

@@ -1,46 +1,45 @@
-<template :key="lesson_id">
-    <!--Sidebar with Dimmer -->
-    <div class="">
-        <!-- Sidebar -->
-        <div
-            class="absolute flex top-0 h-screen z-20"
-            :class="[right ? 'right-0 flex-row' : 'left-0 flex-row-reverse']"
-        >
-            <!--Drawer -->
-            <button
-                @click.prevent="toggle()"
-                class="w-12 h-96 p-1 my-auto rounded text-white bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-color duration-300"
-            >
-                <span
-                    :class="[right ? '-rotate-90' : 'rotate-90']"
-                    class="block transform origin-center font-bold"
-                >
-                    МЕНЮ
-                </span>
-            </button>
+<!-- This example requires Tailwind CSS v2.0+ -->
+<template>
+  <!--
+    This example requires updating your template:
 
-            <!-- Sidebar Content -->
-            <div
-                ref="content"
-                class="transition-all duration-700 bg-white overflow-hidden flex  justify-center w-full border border-3 border-black"
-                :class="[open ? 'max-w-xl' : 'max-w-0']"
-                style="height:99%"
-            >
-                <div class="w-full max-w-2xl  xs:w-1/2 p-4 font-bold text-xl h-full pl-5">
-                  <div class="flex flex-row">
-                    
-                    <a href="#" @click.prevent="courseActive=true" :class="[courseActive ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'inline-flex items-center px-1 pt-1 border-b-2 font-medium pb-2']" >
-                      Курс 
+    ```
+    <html class="h-full bg-gray-100">
+    <body class="h-full">
+    ```
+  -->
+  <div>
+    <TransitionRoot as="template" :show="sidebarOpen">
+      <Dialog as="div" class="fixed inset-0 flex z-40 md:hidden" @close="sidebarOpen = false">
+        <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100" leave-to="opacity-0">
+          <DialogOverlay class="fixed inset-0 bg-gray-600 bg-opacity-75" />
+        </TransitionChild>
+        <TransitionChild as="template" enter="transition ease-in-out duration-300 transform" enter-from="-translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0" leave-to="-translate-x-full">
+          <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+            <TransitionChild as="template" enter="ease-in-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-300" leave-from="opacity-100" leave-to="opacity-0">
+              <div class="absolute top-0 right-0 -mr-12 pt-2">
+                <button type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" @click="sidebarOpen = false">
+                  <span class="sr-only">Close sidebar</span>
+                  <XIcon class="h-6 w-6 text-white" aria-hidden="true" />
+                </button>
+              </div>
+            </TransitionChild>
+            <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+              <div class="flex-shrink-0 flex items-center px-4">
+                <div class="flex flex-row">
+                  <a href="#" @click.prevent="courseActive=true" :class="[courseActive ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'inline-flex items-center px-1 pt-1 border-b-2 font-medium pb-2']" >
+                    Курс 
+                  </a>
+                  <div v-if="!courseActive" class="inline-flex items-center ml-2"> 
+                    <ArrowNarrowRightIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    <a :class="[courseActive== false ? 'border-indigo-500 text-gray-900' : 'text-gray-500', 'inline-flex items-center px-1 pt-1 border-b-2 font-medium pb-2']" >
+                      Темы 
                     </a>
-                    <div v-if="!courseActive" class="inline-flex items-center ml-2"> 
-                      <ArrowNarrowRightIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                      <a :class="[courseActive== false ? 'border-indigo-500 text-gray-900' : 'text-gray-500', 'inline-flex items-center px-1 pt-1 border-b-2 font-medium pb-2']" >
-                        Темы 
-                      </a>
-                    </div> 
-                  </div>
-                  <div class="mt-3">
-                    <div v-if="courseActive">
+                  </div> 
+                </div>
+              </div>
+              <nav class="mt-5 px-2 space-y-1">
+                <div v-if="courseActive">
                        <h2 class="text-xl ml-2 font-bold leading-7 text-gray-900 sm:text-xl sm:tracking-tight sm:truncate">{{course.name}}</h2>
                        <p class="text-gray-500 text-base ml-2 mt-2 font-lignt">Темы курса</p>
                       <ul  role="list" class="divide-y divide-gray-200 mt-3">
@@ -114,31 +113,147 @@
                         </li>
                       </ul>
                     </div>
+              </nav>
+            </div>
+            <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
+              <a href="#" class="flex-shrink-0 group block">
+                <div class="flex items-center">
+                  <div class="ml-3">
+                    <router-link :to="'/learning/'+learning_id" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3">Назад к курсу</router-link>>
                   </div>
                 </div>
-
-                
+              </a>
             </div>
+          </div>
+        </TransitionChild>
+        <div class="flex-shrink-0 w-14">
+          <!-- Force sidebar to shrink to fit close icon -->
         </div>
+      </Dialog>
+    </TransitionRoot>
 
-        
+    <!-- Static sidebar for desktop -->
+    <div class="hidden md:flex md:w-96 md:flex-col md:fixed md:inset-y-0">
+      <!-- Sidebar component, swap this element with another sidebar if you like -->
+      <div class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white">
+        <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+          <div class="flex items-center flex-shrink-0 px-4">
+            <div class="flex flex-row">
+              <a href="#" @click.prevent="courseActive=true" :class="[courseActive ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'inline-flex items-center px-1 pt-1 border-b-2 font-medium pb-2']" >
+                Курс 
+              </a>
+              <div v-if="!courseActive" class="inline-flex items-center ml-2"> 
+                <ArrowNarrowRightIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                <a :class="[courseActive== false ? 'border-indigo-500 text-gray-900' : 'text-gray-500', 'inline-flex items-center px-1 pt-1 border-b-2 font-medium pb-2']" >
+                  Темы 
+                </a>
+              </div> 
+            </div>
+          </div>
+          <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
+            <div v-if="courseActive">
+                <h2 class="text-xl ml-2 font-bold leading-7 text-gray-900 sm:text-xl sm:tracking-tight sm:truncate">{{course.name}}</h2>
+                <p class="text-gray-500 text-base ml-2 mt-2 font-lignt">Темы курса</p>
+              <ul  role="list" class="divide-y divide-gray-200 mt-3">
+                <li v-for="theme,theme_index in course.modules" :key="'t'+theme.id">
+                  <a href="#" class="block hover:bg-gray-50">
+                    <div :set="um=user_modules.find(el => el.module_id==theme.id)" @click="viewModule(theme.id)" class="px-4 py-4 flex items-center sm:px-6">
+                      <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div class="truncate">
+                          <div class="flex">
+                            <p 
+                            :class="[um ? 'text-black' : 'text-gray-500', 'font-medium truncate']"
+                            
+                              >{{theme_index+1}}. {{ theme.name }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="ml-5 flex-shrink-0 flex flex-row">
+                        <CheckIcon v-if="um&&um.is_completed" class="h-5 w-5 mr-3 text-green-400" aria-hidden="true" />
+                        <ChevronRightIcon v-if="um" class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        <LockClosedIcon v-else  class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div v-else class="h-full">
+                <h2 class="text-xl ml-2 font-bold leading-7 text-gray-900 sm:text-xl sm:tracking-tight sm:truncate">{{current_module.name}}</h2>
+                <p class="text-gray-500 text-base ml-2 mt-2 font-lignt">Уроки</p>
+              <ul  role="list" class="divide-y divide-gray-200 mt-3 " style="height:550px">
+                <li v-for="lesson,lesson_index in current_module.lessons" :key="'l'+lesson.id" >
+                  <span :set="ul=current_user_module.user_lessons.find(el => el.lesson_id==lesson.id)"></span>
+                  <a href="#" v-if="ul" @click.prevent="goLesson(lesson.id)" class="block hover:bg-gray-50">
+                    <div class="px-4 py-4 flex items-center sm:px-6">
+                      <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div class="truncate">
+                          <div class="flex">
+                            <p 
+                            :class="[ul ? 'text-black' : 'text-gray-500', 'font-medium truncate']"
+                            
+                              >{{lesson_index+1}}. {{ lesson.name }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="ml-5 flex-shrink-0 flex flex-row">
+                        <CheckIcon v-if="ul&&ul.is_completed" class="h-5 w-5 mr-3 text-green-400" aria-hidden="true" />
+                        <ChevronRightIcon v-if="ul" class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        <LockClosedIcon v-else  class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                      </div>
+                    </div>
+                  </a>
+                  <a href="#" v-else @click.prevent="" class="block hover:bg-gray-50">
+                    <div class="px-4 py-4 flex items-center sm:px-6">
+                      <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div class="truncate">
+                          <div class="flex">
+                            <p 
+                            :class="[ul ? 'text-black' : 'text-gray-500', 'font-medium truncate']"
+                            
+                              >{{lesson_index+1}}. {{ lesson.name }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="ml-5 flex-shrink-0 flex flex-row">
+                        <CheckIcon v-if="ul&&ul.is_completed" class="h-5 w-5 mr-3 text-green-400" aria-hidden="true" />
+                        <ChevronRightIcon v-if="ul" class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        <LockClosedIcon v-else  class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
+          <a href="#" class="flex-shrink-0 w-full group block">
+            <div class="flex items-center">
+              <div class="ml-3">
+                <router-link :to="'/learning/'+learning_id" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3">Назад к курсу</router-link>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
-
-    <!-- Page Content -->
-    
-    <div class="flex place-content-center z-50 h-screen overflow-auto" >
-      <div v-if="lesson" class="bg-white w-3/4 p-4">
-          <p ref="start">
-            <router-link :to="'/learning/'+learning_id" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3">Назад к курсу</router-link>
-            Тема: {{lesson.name}}</p>
-        <div class="sm:hidden">
-          <label for="tabs" class="sr-only">Select a tab</label>
-          <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-          <select id="tabs" name="tabs" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-            <!-- <option v-for="tab in tabs" :key="tab.name" :selected="tab.current">{{ tab.name }}</option> -->
-          </select>
-        </div>
-        <div class="hidden sm:block mb-3">
+    <div class="md:pl-96 flex flex-col flex-1">
+      <div class="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
+        <button type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" @click="sidebarOpen = true">
+          <span class="sr-only">Open sidebar</span>
+          <MenuIcon class="h-6 w-6" aria-hidden="true" />
+        </button>
+      </div>
+      <main class="flex-1">
+        <div v-if="lesson" class="py-6">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <h1 class="text-2xl font-semibold text-gray-900">Тема: {{lesson.name}}</h1>
+          </div>
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <!-- Replace with your content -->
+            <div class="py-4">
+              <div class="hidden sm:block mb-3">
           <div class="border-b border-gray-200">
             <nav class="-mb-px flex space-x-8" aria-label="Tabs">
               <a href="#" @click="switchTab('theory')" :class="[tab=='theory' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200', 'whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm']" :aria-current="tab=='theory' ? 'page' : undefined">Теория</a>
@@ -160,30 +275,30 @@
          
          <div class="flex" v-if="tab=='tasks'">
             <div class="flex-none w-48 h-full border border-gray-500">
-               <nav class="space-y-1" aria-label="Sidebar">
-                <div v-for="item in lesson.tasks" :set="ut=user_tasks.find(el => el.task_id==item.id)" :key="'task'+item.id">
-                  <a href="#" @click.prevent="changeTask(item.id)" v-if="ut" :class="[current_task == item ? 'bg-indigo-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-3 py-2 text-sm font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
-                    <span class="truncate">
-                      Задача № {{ item.position }}
-                    </span>
-                    <span v-if="ut && ut.is_completed" class="bg-green-100 text-gray-600 group-hover:bg-green-200 ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
-                      <div class="flex-shrink-0">
-                        <CheckCircleIcon class="h-5 w-5 text-green-400" aria-hidden="true" />
-                      </div>
-                    </span>
-                  </a>
-                  <a v-else :class="[current_task == item ? 'bg-indigo-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-3 py-2 text-sm font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
-                    <span class="truncate">
-                      Задача № {{ item.position }}
-                    </span>
-                    <span v-if="!ut" class="text-gray-600 ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
-                      <div class="flex-shrink-0">
-                        <LockClosedIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                      </div>
-                    </span>
-                  </a>
-                </div>
-                </nav>
+                <nav class="space-y-1" aria-label="Sidebar">
+                  <div v-for="item in lesson.tasks" :set="ut=user_tasks.find(el => el.task_id==item.id)" :key="'task'+item.id">
+                    <a href="#" @click.prevent="changeTask(item.id)" v-if="ut" :class="[current_task == item ? 'bg-indigo-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-3 py-2 text-sm font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
+                      <span class="truncate">
+                        Задача № {{ item.position }}
+                      </span>
+                      <span v-if="ut && ut.is_completed" class="bg-green-100 text-gray-600 group-hover:bg-green-200 ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
+                        <div class="flex-shrink-0">
+                          <CheckCircleIcon class="h-5 w-5 text-green-400" aria-hidden="true" />
+                        </div>
+                      </span>
+                    </a>
+                    <a v-else :class="[current_task == item ? 'bg-indigo-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-3 py-2 text-sm font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
+                      <span class="truncate">
+                        Задача № {{ item.position }}
+                      </span>
+                      <span v-if="!ut" class="text-gray-600 ml-auto inline-block py-0.5 px-3 text-xs rounded-full">
+                        <div class="flex-shrink-0">
+                          <LockClosedIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        </div>
+                      </span>
+                    </a>
+                  </div>
+                  </nav>
             </div>
             <div class="grow ml-5 px-5 h-full  border">
               <h2>Задача № {{current_task.position }}</h2>
@@ -201,7 +316,7 @@
                   <button v-if="current_user_task.is_completed&&current_task.next_task_id" @click="changeTask(current_task.next_task_id)" type="button" class="-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-green-500 text-sm font-medium text-white hover:bg-green-300 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">Следующая задача</button>
                   <button v-if="current_user_task.is_completed&&!current_task.next_task_id&&lesson.next_lesson_id" @click="completeLesson(current_user_lesson_id)" type="button" class="-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-green-500 text-sm font-medium text-white hover:bg-green-300 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">Перейти к следующей теме</button>
                   <button v-if="current_user_task.is_completed&&!current_task.next_task_id&&!lesson.next_lesson_id" @click="completeModule(current_user_lesson_id)" type="button" class="-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-green-500 text-sm font-medium text-white hover:bg-green-300 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">Завершить модуль</button>
-
+  
                 </span>
               </div>
               </div>
@@ -249,30 +364,71 @@
               </div>
             </div>
          </div> 
-      </div>
-      
+            </div>
+            <!-- /End replace -->
+          </div>
+        </div>
+      </main>
     </div>
-   
+  </div>
 </template>
 
 <script>
-import Swal from 'sweetalert2'
-import Prism from './prism/prism.js';
-import "./prism/prism.css"; 
-import { ChevronRightIcon,ArrowNarrowRightIcon, LockClosedIcon,CheckIcon,XCircleIcon,CheckCircleIcon } from '@heroicons/vue/solid'
-import MonacoEditor from 'monaco-editor-vue3'
-import SqlResult from './SQL/SqlResult.vue'
+  import { ref } from 'vue'
+  import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue'
+  import {
+    CalendarIcon,
+    ChartBarIcon,
+    FolderIcon,
+    HomeIcon,
+    InboxIcon,
+    MenuIcon,
+    UsersIcon,
+    XIcon,
+  } from '@heroicons/vue/outline'
+
+  import Swal from 'sweetalert2'
+  import Prism from './prism/prism.js';
+  import "./prism/prism.css"; 
+  import { ChevronRightIcon,ArrowNarrowRightIcon, LockClosedIcon,CheckIcon,XCircleIcon,CheckCircleIcon } from '@heroicons/vue/solid'
+  import MonacoEditor from 'monaco-editor-vue3'
+  import SqlResult from './SQL/SqlResult.vue'
+
+  const navigation = [
+    { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
+    { name: 'Team', href: '#', icon: UsersIcon, current: false },
+    { name: 'Projects', href: '#', icon: FolderIcon, current: false },
+    { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
+    { name: 'Documents', href: '#', icon: InboxIcon, current: false },
+    { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+  ]
 
 export default {
-  components: {ChevronRightIcon,ArrowNarrowRightIcon,LockClosedIcon,CheckIcon,XCircleIcon,CheckCircleIcon,MonacoEditor,SqlResult},
-	data() {
-		return {
+  components: {
+    Dialog,
+    DialogOverlay,
+    TransitionChild,
+    TransitionRoot,
+    MenuIcon,
+    XIcon,
+    ChevronRightIcon,ArrowNarrowRightIcon,LockClosedIcon,CheckIcon,XCircleIcon,CheckCircleIcon,MonacoEditor,SqlResult
+  },
+  setup() {
+    const sidebarOpen = ref(false)
+
+    return {
+      navigation,
+      sidebarOpen,
+    }
+  },
+  data() {
+    return {
       learning_id: this.$route.params.learning,
       lesson_id: this.$route.params.lesson,
       lesson: null,
-			open: false,
-			dimmer: true,
-			right: false,
+      open: false,
+      dimmer: true,
+      right: false,
       courseActive: false,
       course: {},
       user_modules: [],
@@ -291,12 +447,12 @@ export default {
       options:{
         minimap: {enabled:false}
       },
-		};
-	},
-	methods: {
-		toggle() {
-			this.open = !this.open;
-		},
+    };
+  },
+  methods: {
+    toggle() {
+      this.open = !this.open;
+    },
     viewModule(module_id) {
       this.current_module = this.course.modules.find(el => el.id == module_id)
       this.current_user_module = this.user_modules.find(el => el.module_id == module_id) || {'user_lessons': []}
@@ -401,14 +557,14 @@ export default {
     },
     goLesson(lesson_id)
     {
-
+  
       this.$router.push('/learnings/'+this.learning_id+'/lessons/'+lesson_id)
         .then(() => {
           console.log('Updated route', this.$route)
           this.$router.go(this.$route.path)
         })
     },
-	},
+  },
   computed: {
     type_name() {
       if (this.current_task.task_type.id == 1) {return "sql"}
@@ -446,14 +602,12 @@ export default {
       console.log(err)
     })
     },
-    
-};
+}
 </script>
-
 <style>
-code {
-  background: #f7f9fc;
-  display: inline;
+  code {
+    background: #f7f9fc;
+    display: inline;
     box-sizing: border-box;
     min-width: 1.86em;
     padding: 0.35em 0.55em;
@@ -463,59 +617,59 @@ code {
     font-family: "Menlo","Ubuntu Mono",consolas,source-code-pro,monospace;
     font-size: 0.9em;
     line-height: 1.86em;
-}
-img {
+  }
+  img {
   max-width: 640px;
   margin: 0px auto;
-}
-.image {
+  }
+  .image {
    display: inline;
    margin-top: 20px; 
-}
-
-.table {
+  }
+  
+  .table {
   display: inline;
-}
-table {
- margin: 1em auto;
- table-layout: auto;
- border-collapse: collapse;
- min-width: 50%;
- max-width: 75%;
-}
-tr,th,td {
+  }
+  table {
+  margin: 1em auto;
+  table-layout: auto;
+  border-collapse: collapse;
+  min-width: 50%;
+  max-width: 75%;
+  }
+  tr,th,td {
   border: 1px solid;
   padding: 5px;
   text-align: left;
-}
-.lessontext p{
+  }
+  .lessontext p{
   margin-bottom: 1em;
   text-align: justify;
   line-height: 1.85714285714286;
-}
-
-h2{
+  }
+  
+  h2{
   font-weight: 800;
   margin-block: 1em;
-}
-
-.lessontext ul {
+  }
+  
+  .lessontext ul {
   margin: 10px;
   list-style-type: square;
-}
-
-
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity 1s ease-out;
-}
-
-.fade-enter,
-.fade-leave-to {
-	opacity: 0;
-}
-
-blockquote {
+  }
+  
+  
+  .fade-enter-active,
+  .fade-leave-active {
+  transition: opacity 1s ease-out;
+  }
+  
+  .fade-enter,
+  .fade-leave-to {
+  opacity: 0;
+  }
+  
+  blockquote {
   background-color: #e0e7ff;
   border-left: 5px solid #312e81;
   padding: 1.2em;
@@ -523,5 +677,5 @@ blockquote {
   font-size: 1.1em;
   line-height: inherit;
   position: relative;
-}
+  }
 </style>

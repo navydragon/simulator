@@ -57,6 +57,10 @@ Route::get('/test', function (Request $request) {
 Route::post('/code/sql', function (Request $request){
     $task_type = TaskType::find($request->input('task_type_id'));
     $connection = $task_type->connection;
+    if (!is_null($request->preCode))
+    {
+        $precode = DB::connection($connection)->select(DB::raw($request->preCode));
+    }
     try {
         $query = DB::connection($connection)->select(DB::raw($request->code));
     } catch (Throwable $e) {
@@ -64,6 +68,10 @@ Route::post('/code/sql', function (Request $request){
             'status' => 'error',
             'error' => $e->getMessage()
         ], 500);
+    }
+    if (!is_null($request->postCode))
+    {
+        $postcode = DB::connection($connection)->select(DB::raw($request->postCode));
     }
     $obj =  new stdClass();
     if (count($query)> 0)

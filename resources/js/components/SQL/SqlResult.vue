@@ -1,5 +1,5 @@
 <template>
-    <div v-if="sqlResult" class="flex flex-col h-48 w-full max-w-4xl overflow-scroll">
+    <div v-if="sqlResult" class="flex flex-col h-48 w-full max-w-4xl overflow-auto">
         <div v-if="sqlResult.status=='success'" class="-my-2  ">
             <div class="p-2">
                 <p>Столбцов: {{sqlResult.keys.length}}, Строк: {{sqlResult.results.length}}</p>

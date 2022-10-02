@@ -23,6 +23,8 @@ class AdminTaskResource extends JsonResource
             'description'=> $this->description,
             'position' => $this->position,
             'startCode' => $this->start_code,
+            'preCode' => $this->pre_code,
+            'postCode' => $this->post_code,
             'active' => (boolean) $this->active,
             'rightCode' => $this->right_code,
             'rightOutput' => json_decode($this->right_output)

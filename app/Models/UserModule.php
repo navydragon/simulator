@@ -23,4 +23,9 @@ class UserModule extends Model
     {
         return $this->belongsTo(Module::class,'module_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

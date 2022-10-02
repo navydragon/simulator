@@ -117,4 +117,23 @@ class LearningController extends Controller
         }
         return "ok";
     }
+
+    public function force_next_module(Module $module)
+    {
+        $ums = UserModule::where('module_id',$module->id)->where('is_completed',1);
+        if (!is_null($module->next_module_id))
+        {
+            $next_module = Module::find($module->next_module_id);
+            foreach ($ums as $um)
+            {
+                $learning = Learning::find($um->learning_id);
+                $learning->current_module_id = $next_module->id;
+                $learning->current_lesson_id = $next_module->first_lesson_id;
+                $learning->save();
+                $user = $um->user;
+                $learning->add_user_module($user, $next_module);
+            }
+            
+        }
+    }
 }

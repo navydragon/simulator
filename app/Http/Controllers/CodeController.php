@@ -21,23 +21,40 @@ class CodeController extends Controller
         $ut->current_code = $request->input('code');
         $ut->save();
         $connection = $ut->task->type->connection;
-       $ch = $this->check_hack($request->code); 
-       if ($ch != false)
-       {
-            return response([
-            'status' => 'error',
-            'error' => 'Ошибка при выполнении запроса: обнаружен запрещенный оператор '.$ch
-            ], 500);
-       }
-
+        // $ch = $this->check_hack($request->code); 
+        // if ($ch != false)
+        // {
+        //         return response([
+        //         'status' => 'error',
+        //         'error' => 'Ошибка при выполнении запроса: обнаружен запрещенный оператор '.$ch
+        //         ], 500);
+        // }
+        $t = $ut->task;
+        if (!is_null($t->preCode))
+        {
+            $precode = DB::connection($connection)->statement($t->preCode);
+        }
         try {
             $code = mb_strtolower($request->code);
-            $query = DB::connection($connection)->select(DB::raw($code));
+            $arr = explode (";",$code);
+            foreach ($arr as $key =>$item)
+            {
+                if ($key == (count($arr)-1))
+                {
+                    $query = DB::connection($connection)->select($item);
+                }else{
+                    $query = DB::connection($connection)->statement($item);
+                }
+            }
         } catch (Exception $e) {
             return response([
                 'status' => 'error',
                 'error' => $e->getMessage()
             ], 500);
+        }
+        if (!is_null($t->postCode))
+        {
+            $postcode = DB::connection($connection)->statement($t->postCode);
         }
         $obj =  new stdClass();
         if (count($query)> 0)

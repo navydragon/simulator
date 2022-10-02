@@ -59,10 +59,20 @@ Route::post('/code/sql', function (Request $request){
     $connection = $task_type->connection;
     if (!is_null($request->preCode))
     {
-        $precode = DB::connection($connection)->select("SET NOCOUNT ON;".DB::raw($request->preCode));
+        $precode = DB::connection($connection)->statement($request->preCode);
     }
     try {
-        $query = DB::connection($connection)->select(DB::raw($request->code));
+        $arr = explode (";",$request->code);
+        foreach ($arr as $key =>$item)
+        {
+            if ($key == (count($arr)-1))
+            {
+                $query = DB::connection($connection)->select($item);
+            }else{
+                $query = DB::connection($connection)->statement($item);
+            }
+
+        }
     } catch (Throwable $e) {
         return response([
             'status' => 'error',
@@ -71,7 +81,7 @@ Route::post('/code/sql', function (Request $request){
     }
     if (!is_null($request->postCode))
     {
-        $postcode = DB::connection($connection)->select("SET NOCOUNT ON;".DB::raw($request->postCode));
+        $postcode = DB::connection($connection)->statement($request->postCode);
     }
     $obj =  new stdClass();
     if (count($query)> 0)
